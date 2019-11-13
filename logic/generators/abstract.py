@@ -3,7 +3,6 @@ from random import Random, randrange
 from datetime import date, timedelta
 import sys
 
-from abc import ABC
 from typing import TypeVar, Generic, List, Set, Iterable
 T = TypeVar('T')
 

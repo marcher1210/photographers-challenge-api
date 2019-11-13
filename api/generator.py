@@ -7,97 +7,60 @@ from datetime import date, time
 
 
 
-def GET_numbers(args : ImmutableMultiDict):
-    lowerBound = int(args['lowerBound'])
-    upperBound = int(args['upperBound'])
-    if args.get('seed'):
-        gen = IntLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound,
-            seed=args.get('seed', type=int)
-            )
-    else:
-        gen = IntLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound)
+def GET_numbers(lowerBound: int, upperBound: int, n: int, type: str = 'sequential', seed: int = None):
+    gen = IntLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
     seed = gen.getSeed()
-    data = gen.generateRandomList(args.get('n', type=int)) if args.get("type")=='random' else gen.generateSequentialList(args.get('n', type=int)) 
+    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
 
     resp = {}
     resp['seed'] = seed
     resp['data'] = data
     return {
-        "request": args,
         "success": True,
         "response": resp,
         }
 
 
-def GET_dates(args : ImmutableMultiDict):
-    lowerBound = date.fromisoformat(args['lowerBound'])
-    upperBound = date.fromisoformat(args['upperBound'])
-    if args.get('seed'):
-        gen = DateLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound,
-            seed=args.get('seed', type=int)
-            )
-    else:
-        gen = DateLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound)
+def GET_dates(lowerBound: date, upperBound: date, n: int, type: str = 'sequential', seed: int = None):
+    gen = DateLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
     seed = gen.getSeed()
-    dates = gen.generateRandomList(args.get('n', type=int)) if args.get("type")=='random' else gen.generateSequentialList(args.get('n', type=int)) 
+    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
 
     resp = {}
     resp['seed'] = seed
-    resp['dates'] = dates
+    resp['data'] = data
     return {
-        "request": args,
         "success": True,
         "response": resp,
         }
 
-def GET_times(args : ImmutableMultiDict):
-    lowerBound = time.fromisoformat(args['lowerBound'])
-    upperBound = time.fromisoformat(args['upperBound'])
-    if args.get('seed'):
-        gen = TimeLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound,
-            seed=args.get('seed', type=int)
-            )
-    else:
-        gen = TimeLimitGenerator(
-            lowerBound=lowerBound,
-            upperBound=upperBound)
+def GET_times(lowerBound: time, upperBound: time, n: int, type: str = 'sequential', seed: int = None):
+    gen = TimeLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
     seed = gen.getSeed()
-    times = gen.generateRandomList(args.get('n', type=int)) if args.get("type")=='random' else gen.generateSequentialList(args.get('n', type=int)) 
+    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
 
     resp = {}
     resp['seed'] = seed
-    resp['times'] = times
+    resp['data'] = data
     return {
-        "request": args,
         "success": True,
         "response": resp,
         }
 
 
-def GET_words(args : ImmutableMultiDict):
-    if args.get('seed'):
-        gen = WordLimitGenerator(seed=args.get('seed', type=int))
-    else:
-        gen = WordLimitGenerator()
+def GET_words(n: int, seed: int = None):
+    gen = WordLimitGenerator(seed)    
     
     seed = gen.getSeed()
-    words = gen.generateRandomList(args.get('n', type=int))
+    words = gen.generateRandomList(n)
 
     resp = {}
     resp['seed'] = seed
     resp['words'] = words
     return {
-        "request": args,
         "success": True,
         "response": resp,
         }
+
+if __name__ == "__main__":
+    print("yea")

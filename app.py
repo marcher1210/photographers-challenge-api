@@ -2,15 +2,13 @@ from flask import (
     Flask,
     render_template,
     request,
-    jsonify
 )
 
 from flask.json import JSONEncoder
 from datetime import date
 
-from api.generator import *
+from api.router import *
 
-import sys
 
 class CustomJSONEncoder(JSONEncoder):
 
@@ -47,14 +45,9 @@ def api_home():
 @app.route('/api/', defaults={'path': ''})
 @app.route('/api/<path:path>')
 def api_catch_all(path):
-    method = request.method
-    url = path
-    function = "%s_%s" % (method, url.replace('/', '_'))
-    try:
-        result = getattr(sys.modules[__name__], function)(request.args)
-        return jsonify(result)
-    except:
-        return '"%s" wasn\'t found' % (function)
+    return route(path, request.method, request.args)
+    
+
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
