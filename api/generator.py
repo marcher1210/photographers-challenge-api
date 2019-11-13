@@ -7,7 +7,7 @@ from datetime import date, time
 
 
 
-def numbers(args : ImmutableMultiDict):
+def GET_numbers(args : ImmutableMultiDict):
     lowerBound = int(args['lowerBound'])
     upperBound = int(args['upperBound'])
     if args.get('seed'):
@@ -33,7 +33,7 @@ def numbers(args : ImmutableMultiDict):
         }
 
 
-def dates(args : ImmutableMultiDict):
+def GET_dates(args : ImmutableMultiDict):
     lowerBound = date.fromisoformat(args['lowerBound'])
     upperBound = date.fromisoformat(args['upperBound'])
     if args.get('seed'):
@@ -58,7 +58,7 @@ def dates(args : ImmutableMultiDict):
         "response": resp,
         }
 
-def times(args : ImmutableMultiDict):
+def GET_times(args : ImmutableMultiDict):
     lowerBound = time.fromisoformat(args['lowerBound'])
     upperBound = time.fromisoformat(args['upperBound'])
     if args.get('seed'):
@@ -84,7 +84,7 @@ def times(args : ImmutableMultiDict):
         }
 
 
-def words(args : ImmutableMultiDict):
+def GET_words(args : ImmutableMultiDict):
     if args.get('seed'):
         gen = WordLimitGenerator(seed=args.get('seed', type=int))
     else:

@@ -10,6 +10,8 @@ from datetime import date
 
 from api.generator import *
 
+import sys
+
 class CustomJSONEncoder(JSONEncoder):
 
     def default(self, obj):
@@ -42,25 +44,17 @@ def api_home():
     """
     return render_template('home.html')
 
-@app.route('/api/numbers')
-def api_numbers():
-    print(request.args)
-    return jsonify(numbers(args = request.args))
-
-@app.route('/api/dates')
-def api_dates():
-    print(request.args)
-    return jsonify(dates(args = request.args))
-
-@app.route('/api/times')
-def api_times():
-    print(request.args)
-    return jsonify(times(args = request.args))
-
-@app.route('/api/words')
-def api_words():
-    print(request.args)
-    return jsonify(words(args = request.args))
+@app.route('/api/', defaults={'path': ''})
+@app.route('/api/<path:path>')
+def api_catch_all(path):
+    method = request.method
+    url = path
+    function = "%s_%s" % (method, url.replace('/', '_'))
+    try:
+        result = getattr(sys.modules[__name__], function)(request.args)
+        return jsonify(result)
+    except:
+        return '"%s" wasn\'t found' % (function)
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
