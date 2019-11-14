@@ -3,13 +3,18 @@ from flask import (
     render_template,
     request,
     jsonify,
-    Response
+    redirect
 )
 from werkzeug import MultiDict
 from .generator import *
 from .exceptions import *
 
 import sys, inspect
+from random import randrange
+
+def redirect_with_seed():
+    seed = randrange(sys.maxsize)
+    return redirect(request.url+"&seed="+str(seed))
 
 def route(path : str, method : str, args: MultiDict):
     try:
@@ -26,6 +31,8 @@ def route(path : str, method : str, args: MultiDict):
             if not p.name in args:
                 if p.default==inspect.Parameter.empty:
                     #Required parameter
+                    if(p.name=="seed"):
+                        return redirect_with_seed()
                     raise MissingParameter(p.name, p.annotation)
                 else:
                     #Optional parameter
