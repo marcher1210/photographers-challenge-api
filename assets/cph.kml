@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<!-- created by GmapGIS.com -->
+<Document><name>Copenhagen </name><description>Roughly the borders of Copenhagen</description>
+<Placemark>
+<name>Polygon</name>
+<Polygon><tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode><outerBoundaryIs><LinearRing><coordinates>
+12.54148,55.70631,0.0
+12.52699,55.69549,0.0
+12.49924,55.68603,0.0
+12.49249,55.67778,0.0
+12.4935,55.66455,0.0
+12.51652,55.65222,0.0
+12.51754,55.63694,0.0
+12.53171,55.63135,0.0
+12.54999,55.64224,0.0
+12.64853,55.64544,0.0
+12.65076,55.65532,0.0
+12.63902,55.66414,0.0
+12.60797,55.68312,0.0
+12.59917,55.68705,0.0
+12.60183,55.70361,0.0
+12.57849,55.7156,0.0
+12.55976,55.7158,0.0
+</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark></Document></kml>

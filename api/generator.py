@@ -1,6 +1,7 @@
 from logic.generators.abstract import SequenceLimitGenerator, RandomLimitGenerator
 from logic.generators.when import DateLimitGenerator, TimeLimitGenerator
 from logic.generators.what import WordLimitGenerator
+from logic.generators.where import CoordinateLimitGenerator
 from logic.generators.general import *
 from werkzeug import ImmutableMultiDict
 from datetime import date, time
@@ -54,6 +55,10 @@ def GET_random_times(lowerBound: time, upperBound: time, n: int, seed: int):
 
 def GET_random_words(n: int, seed: int):
     generator = WordLimitGenerator(seed)    
+    return generate_random_response(generator, n)
+
+def GET_random_coordinates(n: int, seed: int):
+    generator = CoordinateLimitGenerator("assets/cph.kml",seed)    
     return generate_random_response(generator, n)
 
 

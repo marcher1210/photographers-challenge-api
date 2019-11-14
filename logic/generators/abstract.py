@@ -55,6 +55,8 @@ class SequenceLimitGenerator(LimitGenerator[T]):
     def increment(self) -> None:
         pass
 
+class ContinuousLimitGenerator(RandomLimitGenerator[T]):
+    pass
 
 class DiscreteLimitGenerator(RandomLimitGenerator[T]):
     pass
