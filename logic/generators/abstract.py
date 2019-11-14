@@ -35,7 +35,7 @@ class RandomLimitGenerator(LimitGenerator[T]):
     def generateRandomOne(self) -> T:
         pass
  
-class SequentialLimitGenerator(LimitGenerator[T]):
+class SequenceLimitGenerator(LimitGenerator[T]):
     def __init__(self, start : T) -> None:
         self.currentItem = start
     
@@ -60,11 +60,11 @@ class DiscreteLimitGenerator(RandomLimitGenerator[T]):
     pass
 
 
-class BoundsLimitGenerator(DiscreteLimitGenerator[T], SequentialLimitGenerator[T]):
+class BoundsLimitGenerator(DiscreteLimitGenerator[T], SequenceLimitGenerator[T]):
     def __init__(self, lowerBound : T, upperBound : T, seed=None) -> None:
         self.lowerBound = lowerBound
         self.upperBound = upperBound
-        SequentialLimitGenerator.__init__(self, lowerBound)
+        SequenceLimitGenerator.__init__(self, lowerBound)
         DiscreteLimitGenerator.__init__(self, seed)
 
 

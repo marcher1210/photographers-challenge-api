@@ -1,3 +1,4 @@
+from logic.generators.abstract import SequenceLimitGenerator, RandomLimitGenerator
 from logic.generators.when import DateLimitGenerator, TimeLimitGenerator
 from logic.generators.what import WordLimitGenerator
 from logic.generators.general import *
@@ -6,61 +7,55 @@ from datetime import date, time
 
 
 
+def generate_sequence_response(generator: SequenceLimitGenerator, n: int):
+    items = generator.generateSequentialList(n)
 
-def GET_numbers(lowerBound: int, upperBound: int, n: int, type: str = 'sequential', seed: int = None):
-    gen = IntLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
-    seed = gen.getSeed()
-    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
-
-    resp = {}
-    resp['seed'] = seed
-    resp['data'] = data
     return {
-        "success": True,
-        "response": resp,
+        "items": items,
         }
 
+def generate_random_response(generator: RandomLimitGenerator, n: int):
+    seed = generator.getSeed()
+    items = generator.generateRandomList(n)
 
-def GET_dates(lowerBound: date, upperBound: date, n: int, type: str = 'sequential', seed: int = None):
-    gen = DateLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
-    seed = gen.getSeed()
-    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
-
-    resp = {}
-    resp['seed'] = seed
-    resp['data'] = data
     return {
-        "success": True,
-        "response": resp,
+        "seed": seed,
+        "items": items,
         }
 
-def GET_times(lowerBound: time, upperBound: time, n: int, type: str = 'sequential', seed: int = None):
-    gen = TimeLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
-    seed = gen.getSeed()
-    data = gen.generateRandomList(n) if type=='random' else gen.generateSequentialList(n) 
+## Sequence
 
-    resp = {}
-    resp['seed'] = seed
-    resp['data'] = data
-    return {
-        "success": True,
-        "response": resp,
-        }
+def GET_sequence_numbers(lowerBound: int, upperBound: int, n: int):
+    generator = IntLimitGenerator(lowerBound=lowerBound, upperBound=upperBound)
+    return generate_sequence_response(generator, n)
+
+def GET_sequence_dates(lowerBound: date, upperBound: date, n: int):
+    generator = DateLimitGenerator(lowerBound=lowerBound, upperBound=upperBound)
+    return generate_sequence_response(generator, n)
+
+def GET_sequence_times(lowerBound: time, upperBound: time, n: int):
+    generator = TimeLimitGenerator(lowerBound=lowerBound, upperBound=upperBound)
+    return generate_sequence_response(generator, n)
 
 
-def GET_words(n: int, seed: int = None):
-    gen = WordLimitGenerator(seed)    
-    
-    seed = gen.getSeed()
-    words = gen.generateRandomList(n)
+## Random
 
-    resp = {}
-    resp['seed'] = seed
-    resp['words'] = words
-    return {
-        "success": True,
-        "response": resp,
-        }
+def GET_random_numbers(lowerBound: int, upperBound: int, n: int, seed: int):
+    generator = IntLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
+    return generate_random_response(generator, n)
+
+def GET_random_dates(lowerBound: date, upperBound: date, n: int, seed: int):
+    generator = DateLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
+    return generate_random_response(generator, n)
+
+def GET_random_times(lowerBound: time, upperBound: time, n: int, seed: int):
+    generator = TimeLimitGenerator(lowerBound=lowerBound, upperBound=upperBound, seed=seed)
+    return generate_random_response(generator, n)
+
+def GET_random_words(n: int, seed: int):
+    generator = WordLimitGenerator(seed)    
+    return generate_random_response(generator, n)
+
 
 if __name__ == "__main__":
     print("yea")

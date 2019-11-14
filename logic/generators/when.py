@@ -1,4 +1,4 @@
-from .abstract import SequentialLimitGenerator, BoundsLimitGenerator
+from .abstract import BoundsLimitGenerator
 
 from datetime import datetime, date, time, timedelta
 
