@@ -3,6 +3,7 @@ from flask import (
     render_template,
     request,
 )
+from flask_cors import CORS
 
 from flask.json import JSONEncoder
 from datetime import date
@@ -30,6 +31,8 @@ class CustomJSONEncoder(JSONEncoder):
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
 app.json_encoder = CustomJSONEncoder
+
+CORS(app)
 
 # Create a URL route in our application for "/"
 @app.route('/')
