@@ -3,6 +3,8 @@ from logic.generators.when import DateLimitGenerator, TimeLimitGenerator
 from logic.generators.what import WordLimitGenerator
 from logic.generators.where import CoordinateLimitGenerator
 from logic.generators.general import *
+from logic.render.map import *
+
 from werkzeug import ImmutableMultiDict
 from datetime import date, time
 
@@ -86,6 +88,13 @@ def GET_pages( n: int, seed: int):
         "items": items,
         }
 
+## Render images
+
+def GET_render_map_overview(lon: float, lat: float, boundMinLon: float, boundMinLat: float, boundMaxLon: float, boundMaxLat: float):
+    return getOverviewMapResponse(lon, lat, boundMinLon, boundMinLat, boundMaxLon, boundMaxLat)
+
+def GET_render_map_local(lon: float, lat: float):
+    return getLocalMapResponse(lon, lat)
 
 if __name__ == "__main__":
     print("yea")
