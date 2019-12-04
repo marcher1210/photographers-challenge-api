@@ -61,6 +61,31 @@ def GET_random_coordinates(n: int, seed: int):
     generator = CoordinateLimitGenerator("assets/cph.kml",seed)    
     return generate_random_response(generator, n)
 
+## Pages
+
+def GET_pages( n: int, seed: int):
+    generator = WordLimitGenerator(seed)    
+    seed = generator.getSeed()
+    words = generator.generateRandomList(n)
+
+    generator = DateLimitGenerator(lowerBound=date(2019,2,17), upperBound=date(2090,1,1))
+    dates = generator.generateSequentialList(n)
+
+    generator = CoordinateLimitGenerator("assets/cph.kml",seed)
+    coordinates = generator.generateRandomList(n)
+
+    items = [
+        {
+            "what": words[i],
+            "when": dates[i],
+            "where": coordinates[i]
+        } 
+        for i in range(n)]
+    return {
+        "seed": seed,
+        "items": items,
+        }
+
 
 if __name__ == "__main__":
     print("yea")
