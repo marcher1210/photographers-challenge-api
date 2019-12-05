@@ -50,7 +50,10 @@ def route(path : str, method : str, args: MultiDict):
 
             params[p.name] = value
         result = function(**params)
-        return jsonify(result)
+        try:
+            return jsonify(result)
+        except (TypeError):
+            return result
     except PhotoChallengeException as e:
         resp = jsonify({"error": {
             "message": e.error_message()
