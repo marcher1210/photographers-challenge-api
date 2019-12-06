@@ -41,8 +41,8 @@ def route(path : str, method : str, args: MultiDict):
 
             #try instatiating / casting the value
             try:
-                if p.annotation in [list]:
-                    if type(args[p.name]) == list:
+                if p.annotation in [list,dict]:
+                    if type(args[p.name]) in [list,dict]:
                         value = args[p.name]
                     else:
                         value = args.getlist(p.name)
