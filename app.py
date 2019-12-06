@@ -45,10 +45,18 @@ def api_home():
     """
     return render_template('home.html')
 
-@app.route('/api/', defaults={'path': ''})
-@app.route('/api/<path:path>')
+@app.route('/api/', defaults={'path': ''}, methods=['GET', 'POST'])
+@app.route('/api/<path:path>', methods=['GET', 'POST'])
 def api_catch_all(path):
-    return route(path, request.method, request.args)
+    if request.method == "GET":
+        return route(path, request.method, request.args)
+    if request.method == "POST":
+        if request.mimetype in ['application/x-www-form-urlencoded',  'multipart/form-data']:
+            return route(path, request.method, request.form)
+        if request.mimetype == 'application/json':
+            return route(path, request.method, request.json)
+        else:
+            pass
     
 
 

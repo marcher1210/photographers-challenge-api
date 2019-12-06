@@ -31,7 +31,7 @@ def route(path : str, method : str, args: MultiDict):
             if not p.name in args:
                 if p.default==inspect.Parameter.empty:
                     #Required parameter
-                    if(p.name=="seed"):
+                    if(method == "GET" and p.name=="seed"):
                         return redirect_with_seed()
                     raise MissingParameter(p.name, p.annotation)
                 else:
@@ -41,7 +41,12 @@ def route(path : str, method : str, args: MultiDict):
 
             #try instatiating / casting the value
             try:
-                if p.annotation in [date, time]:
+                if p.annotation in [list]:
+                    if type(args[p.name]) == list:
+                        value = args[p.name]
+                    else:
+                        value = args.getlist(p.name)
+                elif p.annotation in [date, time]:
                     value = p.annotation.fromisoformat(strvalue)
                 else:
                     value = p.annotation(strvalue)
