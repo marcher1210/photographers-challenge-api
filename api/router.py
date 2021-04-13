@@ -15,7 +15,7 @@ from random import randrange
 def redirect_with_seed():
     seed = randrange(sys.maxsize)
     url = request.url
-    if request.is_secure:
+    if "localhost" not in url and "127.0.0.1" not in url:
         url = url.replace('http://', 'https://', 1)
     return redirect(url+"&seed="+str(seed))
 
