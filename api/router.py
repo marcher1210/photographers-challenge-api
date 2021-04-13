@@ -14,7 +14,10 @@ from random import randrange
 
 def redirect_with_seed():
     seed = randrange(sys.maxsize)
-    return redirect(request.url+"&seed="+str(seed))
+    url = request.url
+    if request.is_secure:
+        url = url.replace('http://', 'https://', 1)
+    return redirect(url+"&seed="+str(seed))
 
 def route(path : str, method : str, args: MultiDict):
     try:
