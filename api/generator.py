@@ -5,6 +5,7 @@ from logic.generators.where import CoordinateLimitGenerator
 from logic.generators.general import *
 from logic.render.map import *
 
+import sys
 from werkzeug import ImmutableMultiDict
 from datetime import date, time
 
@@ -88,6 +89,22 @@ def GET_pages( n: int, seed: int):
         "items": items,
         }
 
+def POST_pages(n: int, seed:int, limits: dict):
+    items = [{} for i in range(n)]
+    for limit in limits:
+        name = limit['name']
+        class_name = name + 'LimitGenerator'
+        class_ = getattr(sys.modules[__name__], class_name, None)
+        generator = class_(seed)
+
+        for i, item in enumerate(generator.generateRandomList(n)):
+            items[i][name] = item
+
+    return {
+        "seed": seed,
+        "items": items,
+        }
+
 ## Render images
 
 def GET_render_map_overview(lon: float, lat: float, boundMinLon: float, boundMinLat: float, boundMaxLon: float, boundMaxLat: float):
@@ -95,6 +112,17 @@ def GET_render_map_overview(lon: float, lat: float, boundMinLon: float, boundMin
 
 def GET_render_map_local(lon: float, lat: float):
     return getLocalMapResponse(lon, lat)
+
+
+## Test
+
+def GET_test(input: str, arr: list):
+    print (type(['wefwef','wefwf']))
+    return {
+        "input": input,
+        "arr": arr
+        }
+
 
 if __name__ == "__main__":
     print("yea")
